@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>基础测试 - 大学生健身管理系统</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    h1 {
+      color: #667eea;
+      text-align: center;
+    }
+    .test-section {
+      margin: 20px 0;
+      padding: 15px;
+      border-left: 4px solid #667eea;
+      background: #f5f7fa;
+    }
+    .success {
+      color: #67c23a;
+      font-weight: bold;
+    }
+    button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 5px;
+    }
+    button:hover {
+      background: #764ba2;
+    }
+    #output {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f0f9ff;
+      border-radius: 6px;
+      min-height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧪 基础功能测试</h1>
+    
+    <div class="test-section">
+      <p>✅ HTML 渲染正常</p>
+      <p>✅ CSS 样式正常</p>
+      <p>✅ 页面背景渐变正常</p>
+    </div>
+    
+    <div class="test-section">
+      <p>如果看到这个按钮，说明页面基本功能正常：</p>
+      <button onclick="testBasic()">测试基础功能</button>
+      <button onclick="window.location.href='/diagnostic.html'">访问诊断页</button>
+    </div>
+    
+    <div class="test-section">
+      <p>点击下面的按钮测试 JavaScript:</p>
+      <button onclick="testJavaScript()">测试 JavaScript</button>
+      <button onclick="testDOM()">测试 DOM 操作</button>
+    </div>
+    
+    <div id="output"></div>
+  </div>
+
+  <script>
+    function testBasic() {
+      document.getElementById('output').innerHTML = '<p class="success">✅ 基础功能测试通过！页面可以正常响应点击事件。</p>';
+    }
+    
+    function testJavaScript() {
+      try {
+        const result = 2 + 2;
+        document.getElementById('output').innerHTML = 
+          '<p class="success">✅ JavaScript 计算测试通过：2 + 2 = ' + result + '</p>';
+      } catch (e) {
+        document.getElementById('output').innerHTML = 
+          '<p style="color: #f56c6c;">❌ JavaScript 错误：' + e.message + '</p>';
+      }
+    }
+    
+    function testDOM() {
+      try {
+        const div = document.createElement('div');
+        div.innerHTML = '<p class="success">✅ DOM 操作测试通过！</p>';
+        document.getElementById('output').appendChild(div);
+      } catch (e) {
+        document.getElementById('output').innerHTML = 
+          '<p style="color: #f56c6c;">❌ DOM 错误：' + e.message + '</p>';
+      }
+    }
+    
+    console.log('基础测试页面已加载');
+  </script>
+</body>
+</html>

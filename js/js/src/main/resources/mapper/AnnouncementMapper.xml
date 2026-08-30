@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fitness.mapper.AnnouncementMapper">
+
+    <!-- 根据用户角色获取公告列表 -->
+    <select id="selectByUserRole" resultType="com.fitness.entity.Announcement">
+        SELECT * FROM announcements
+        WHERE status = 'ACTIVE'
+        AND (expire_at IS NULL OR expire_at > NOW())
+        AND (
+            -- 系统公告：所有用户可见
+            type = 'SYSTEM'
+            -- 角色公告：目标角色包含用户角色
+            OR (type = 'ROLE' AND JSON_CONTAINS(target_roles, CONCAT('"', #{role}, '"')))
+            -- 个人通知：目标用户是当前用户
+            OR (type = 'PERSONAL' AND target_user_id = #{userId})
+        )
+        ORDER BY priority DESC, created_at DESC
+    </select>
+
+    <!-- 增加公告查看次数 -->
+    <update id="incrementViewCount">
+        UPDATE announcements
+        SET view_count = view_count + 1
+        WHERE id = #{id}
+    </update>
+
+</mapper>

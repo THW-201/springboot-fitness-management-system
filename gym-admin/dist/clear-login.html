@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>清除登录状态</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 400px;
+        }
+        h1 {
+            color: #303133;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #606266;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+        }
+        .status.success {
+            background: #f0f9ff;
+            border: 1px solid #67c23a;
+            color: #67c23a;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔑 清除登录状态</h1>
+        <p>点击下方按钮清除本地登录状态，然后您将自动跳转到登录页面。</p>
+        <button class="btn" onclick="clearAndRedirect()">清除登录状态</button>
+        <div class="status" id="status"></div>
+    </div>
+
+    <script>
+        function clearAndRedirect() {
+            // 清除 localStorage
+            localStorage.clear();
+
+            // 显示成功消息
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = '✅ 登录状态已清除，正在跳转...';
+            statusDiv.className = 'status success';
+
+            // 1秒后跳转到登录页
+            setTimeout(() => {
+                window.location.href = '/login';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

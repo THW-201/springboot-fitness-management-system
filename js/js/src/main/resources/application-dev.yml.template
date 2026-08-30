@@ -1,0 +1,29 @@
+# 开发环境配置模板
+# 复制此文件为 application-dev.yml 并修改相应配置
+
+spring:
+  # 数据源配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/fitness_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: your_password_here
+  
+  # Redis配置
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: your_redis_password_here  # 如果没有密码则留空
+
+# JWT配置
+jwt:
+  secret: your-secret-key-at-least-256-bits-long-for-production-use
+  expiration: 86400000  # 24小时
+  refresh-expiration: 604800000  # 7天
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    com.fitness: DEBUG
+    com.baomidou.mybatisplus: DEBUG

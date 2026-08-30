@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fitness.mapper.SocialTopicMapper">
+
+    <resultMap id="TopicDTOMap" type="com.fitness.dto.TopicDTO">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="posts" property="posts" />
+    </resultMap>
+
+    <select id="getHotTopics" resultMap="TopicDTOMap">
+        SELECT * FROM social_topic ORDER BY posts DESC LIMIT 5
+    </select>
+
+</mapper>

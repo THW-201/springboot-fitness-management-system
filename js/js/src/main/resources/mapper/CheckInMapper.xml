@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fitness.mapper.CheckInMapper">
+
+    <!-- 查询所有签到记录（管理员） -->
+    <select id="findAll" resultType="com.fitness.entity.CheckIn">
+        <![CDATA[
+        SELECT * FROM check_ins WHERE 1=1
+        ]]>
+        <if test="studentId != null">
+            <![CDATA[ AND student_id = #{studentId} ]]>
+        </if>
+        <if test="status != null">
+            <if test="status == 'CHECKED_IN'">
+                <![CDATA[ AND check_out_time IS NULL ]]>
+            </if>
+            <if test="status == 'CHECKED_OUT'">
+                <![CDATA[ AND check_out_time IS NOT NULL ]]>
+            </if>
+        </if>
+        <if test="startDate != null">
+            <![CDATA[ AND check_in_time >= #{startDate} ]]>
+        </if>
+        <if test="endDate != null">
+            <![CDATA[ AND check_in_time <= #{endDate} ]]>
+        </if>
+        <![CDATA[
+        ORDER BY check_in_time DESC
+        ]]>
+    </select>
+
+    <!-- 查询未签到的预约记录 -->
+    <select id="findUncheckedInReservations" resultType="com.fitness.entity.Reservation">
+        <![CDATA[
+        SELECT r.* FROM reservations r
+        WHERE r.status = 'CONFIRMED' -- 只查询已确认的预约
+        AND NOT EXISTS (
+            SELECT 1 FROM check_ins c
+            WHERE c.reservation_id = r.id
+        )
+        ]]>
+        <if test="studentId != null">
+            <![CDATA[ AND r.student_id = #{studentId} ]]>
+        </if>
+        <if test="startDate != null">
+            <![CDATA[ AND r.start_time >= #{startDate} ]]>
+        </if>
+        <if test="endDate != null">
+            <![CDATA[ AND r.start_time <= #{endDate} ]]>
+        </if>
+        <![CDATA[
+        ORDER BY r.start_time DESC
+        ]]>
+    </select>
+
+</mapper>

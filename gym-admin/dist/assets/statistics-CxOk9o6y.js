@@ -1,0 +1,1 @@
+import{a7 as s}from"./index-BfFn-LJC.js";const r={getCourseStatistics:t=>s.get("/statistics/courses",{params:t}),getEquipmentStatistics:t=>s.get("/statistics/equipment",{params:t}),getStudentStatistics:(t,e=1,i=10)=>s.get("/statistics/students",{params:{...t,page:e,size:i}}),getPersonalHealthData:()=>s.get("/statistics/my")};export{r as s};

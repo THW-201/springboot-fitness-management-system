@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fitness.mapper.SocialFollowMapper">
+
+    <resultMap id="UserDTOMap" type="com.fitness.dto.UserDTO">
+        <id column="id" property="id" />
+        <result column="real_name" property="realName" />
+        <result column="avatar_url" property="avatarUrl" />
+        <result column="followed" property="followed" />
+    </resultMap>
+
+    <select id="checkFollow" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM social_follow WHERE follower_id = #{followerId} AND following_id = #{followingId}
+    </select>
+
+    <select id="getRecommendedUsers" resultMap="UserDTOMap">
+        SELECT
+            u.id,
+            u.real_name,
+            u.avatar_url,
+            CASE WHEN f.id IS NOT NULL THEN TRUE ELSE FALSE END as followed
+        FROM users u
+                 LEFT JOIN social_follow f ON u.id = f.following_id AND f.follower_id = #{userId}
+        WHERE u.id != #{userId}
+        ORDER BY RAND()
+            LIMIT #{limit}
+    </select>
+
+    <select id="getFollowingUsers" resultMap="UserDTOMap">
+        SELECT
+            u.id,
+            u.real_name,
+            u.avatar_url,
+            TRUE as followed
+        FROM users u
+                 JOIN social_follow f ON u.id = f.following_id
+        WHERE f.follower_id = #{userId}
+        LIMIT #{limit}
+    </select>
+
+</mapper>

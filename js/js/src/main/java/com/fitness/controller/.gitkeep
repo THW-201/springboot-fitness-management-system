@@ -1,0 +1,2 @@
+# Controller层
+# 负责接收HTTP请求、参数验证、调用Service层、返回响应

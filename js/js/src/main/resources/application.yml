@@ -1,0 +1,110 @@
+spring:
+  application:
+    name: student-fitness-management
+  
+  # 激活的配置文件
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/fitness_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 300000
+      connection-timeout: 20000
+      max-lifetime: 1200000
+  
+  # 自动执行SQL文件
+  sql:
+    init:
+      schema-locations: classpath:sql/social_tables.sql
+      mode: always
+  
+  # Redis配置
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: 
+      database: 0
+      timeout: 5000ms
+      lettuce:
+        pool:
+          max-active: 20
+          max-idle: 10
+          min-idle: 5
+          max-wait: 2000ms
+  
+  # Jackson配置
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: non_null
+  
+  # 文件上传配置
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# MyBatis Plus配置
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  mapper-locations: classpath*:/mapper/**/*.xml
+
+# JWT配置
+jwt:
+  secret: your-secret-key-change-this-in-production-min-256-bits-long
+  expiration: 86400000  # 24小时（毫秒）
+  refresh-expiration: 604800000  # 7天（毫秒）
+
+# DeepSeek AI配置
+deepseek:
+  api:
+    key: ${DEEPSEEK_API_KEY:sk-f2c969e1dd85423fa7169f2458222dee}
+    endpoint: ${DEEPSEEK_API_ENDPOINT:https://api.deepseek.com/v1}
+    model: deepseek-chat
+    timeout: 30000  # 30秒
+    max-retries: 3
+
+# SpringDoc OpenAPI配置
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  info:
+    title: 大学生健身管理系统 API
+    description: 大学生健身管理系统后端接口文档
+    version: 1.0.0
+
+# 服务器配置
+server:
+  port: 8085
+  servlet:
+    context-path: /api/v1
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    com.fitness: DEBUG
+    com.baomidou.mybatisplus: DEBUG
+    org.springframework.web.servlet.handler.HandlerMappingIntrospector: ERROR
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

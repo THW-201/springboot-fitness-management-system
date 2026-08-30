@@ -1,0 +1,1 @@
+import{a7 as t}from"./index-BfFn-LJC.js";const n={getEquipmentList(e){return t.get("/equipment",{params:e})},getEquipmentById(e){return t.get(`/equipment/${e}`)},createEquipment(e){return t.post("/equipment",e)},updateEquipment(e,p){return t.put(`/equipment/${e}`,p)},deleteEquipment(e){return t.delete(`/equipment/${e}`)}};export{n as e};

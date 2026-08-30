@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>测试 - 大学生健身管理系统</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+    }
+    .test-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 { color: #667eea; }
+    .status {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+    }
+    .success { background: #f0f9ff; color: #67c23a; }
+    .info { background: #f4f4f5; color: #909399; }
+    button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover { background: #764ba2; }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1>🧪 系统诊断页面</h1>
+    
+    <div class="status success">
+      ✅ HTML 页面加载正常
+    </div>
+    
+    <div class="status info">
+      <p><strong>当前 URL:</strong> <span id="currentUrl"></span></p>
+      <p><strong>时间:</strong> <span id="currentTime"></span></p>
+    </div>
+    
+    <h2>测试功能</h2>
+    <button onclick="window.location.href='/login'">访问登录页</button>
+    <button onclick="testJavaScript()">测试 JavaScript</button>
+    <button onclick="reloadPage()">刷新页面</button>
+    
+    <div id="jsTestResult" style="margin-top: 20px; padding: 10px; display: none;"></div>
+    
+    <h2>系统信息</h2>
+    <div class="status info">
+      <p><strong>User Agent:</strong> <span id="userAgent"></span></p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('currentUrl').textContent = window.location.href;
+    document.getElementById('currentTime').textContent = new Date().toLocaleString();
+    document.getElementById('userAgent').textContent = navigator.userAgent;
+    
+    function testJavaScript() {
+      const resultDiv = document.getElementById('jsTestResult');
+      try {
+        resultDiv.style.display = 'block';
+        resultDiv.style.background = '#f0f9ff';
+        resultDiv.style.color = '#67c23a';
+        resultDiv.innerHTML = '✅ JavaScript 工作正常！';
+      } catch (e) {
+        resultDiv.style.display = 'block';
+        resultDiv.style.background = '#fef0f0';
+        resultDiv.style.color = '#f56c6c';
+        resultDiv.innerHTML = '❌ JavaScript 错误: ' + e.message;
+      }
+    }
+    
+    function reloadPage() {
+      window.location.reload();
+    }
+    
+    console.log('诊断页面加载成功！');
+  </script>
+</body>
+</html>
